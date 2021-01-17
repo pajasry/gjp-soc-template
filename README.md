@@ -2,12 +2,12 @@
 Když jsem měl psát soč zděsil jsem se jejich [šablony](https://www.soc.cz/dokumenty/sablona_SOC.docx), nakonec jsme našli [LaTeX šablonu](https://github.com/RoboticsBrno/soctemplate/) a tu upravili dle místních zvyklostí.
 
 ## LaTeX
-LaTeX("latech" nikoliv "lateks") umožňuje autorům textů sázet a tisknout svá díla ve velmi vysoké kvalitě, přičemž autor používá "profesionály" předdefinovaných vzhledů dokumentu. Ty jsi se k dokumentu už dostal. Je v tomhle repozitáři, stáhnout si ho můžeš [tady](https://github.com/pajasry/gjp-soc-template.git) a s ním dále pracovat. __POZOR__ nejde ho jen tak upravovat, po změně se musí znovu "sestavit"/přeložit. K tomu potřebuješ speciální program. My používáme [overleaf](https://www.overleaf.com), který toho umí mnohem víc než jen upravovat LaTeX.
+LaTeX("latech" nikoliv "lateks") umožňuje autorům textů sázet a tisknout svá díla ve velmi vysoké kvalitě, přičemž autor používá "profesionály" předdefinovaných vzhledů dokumentu. Ty jsi se k dokumentu už dostal. Je v tomhle repozitáři, stáhnout si ho můžeš [tady](https://github.com/pajasry/gjp-soc-template/archive/main.zip) a s ním dále pracovat. __POZOR__ nejde ho jen tak upravovat, po změně se musí znovu "sestavit"/přeložit. K tomu potřebuješ speciální program. My používáme [overleaf](https://www.overleaf.com), který toho umí mnohem víc než jen upravovat LaTeX.
 
 ## Začínáme
 Teď tě rychle provedeme přípravou a nahráním projektu do overleafu.
 - Jdi na [www.overleaf.com](https://www.overleaf.com) a zaregistruj se
-- stáhni si tenhle repositář [tady](https://github.com/pajasry/gjp-soc-template.git)
+- stáhni si tenhle repositář [tady](https://github.com/pajasry/gjp-soc-template/archive/main.zip)
 - přihlas se do overleafu, měl by jsi vidět stránku s projekty
 - klikni na "New Project" a vyber upload project
 - nahraj stažený *zip*
