@@ -1,0 +1,128 @@
+% soctepmlate unofficial - SOČ = Středoškolská odborná činnost - Czech competition
+% Author: Vojtěch Boček
+% Edit by: Jaroslav Páral
+% Version: 2018-02-12
+% Source code: https://github.com/RoboticsBrno/soctemplate/
+% Base on: http://www.jcmm.cz/cz/sablona-soc.html
+% License: CC BY 4.0
+% Edited by: Pavel Šrytr for his SOC team needs and to meets the requierements of the SOC supervisor
+
+
+\documentclass{template/socthesis}
+
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage[bottom, hang, flushmargin]{footmisc}
+\usepackage{xcolor}
+\usepackage{listings}
+\input{ColorSyntax}
+\renewcommand{\lstlistingname}{Program}
+\renewcommand{\lstlistlistingname}{Seznam programů}
+\usepackage[left=3.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+
+\newcommand*{\noaddvspace}{\renewcommand*{\addvspace}[1]{}}
+\addtocontents{lof}{\protect\noaddvspace}
+
+\interfootnotelinepenalty=10000
+\pretolerance=150
+\setlength{\emergencystretch}{3em}
+
+\usepackage{chngcntr}
+\counterwithout{footnote}{chapter}
+
+\addbibresource{text.bib}
+
+\titlecz{TODO: Název práce}
+\titleen{TODO: Anglický název práce}
+\author{TODO: jméno autora}
+\field{18}
+\school{Gymnázium Jana~Palacha, Pod Vrchem 3421, Mělník 276 01}
+\mentor{TODO: jméno vedoucího práce "Mgr. Markéta Wolfová"}
+\mentorstatement{TODO: vyskloňované jméno vedoucího "Mgr. Markétě Wolfové"}
+
+
+\begin{document}
+\titleformat
+{\chapter} % command
+[hang] % shape
+{\normalfont\huge\bfseries} % format
+{\thechapter} % label
+{0ex} % sep
+{
+    \vspace{-2ex}
+} % before-code
+[
+    \vspace{1ex}
+] % after-code
+	\maketitle
+	\makecopyrightstatement{Mělník}{TODO: Jméno autora}
+	
+	\makethanks{TODO:Text poděkování}
+	
+	\pagestyle{empty}
+	
+	\section*{Anotace}
+    TODO: Anotace
+	
+	\subsection*{Klíčová slova}
+	TODO: klíčová slova
+	
+	\vspace{20mm}
+	
+	\section*{Annotation}
+    TODO: anglická anotace
+	
+	\subsection*{Keywords}
+	TODO: anglické klíčová slova
+	
+	\titlespacing{\chapter}{0pt}{-2cm}{0pt}
+	\titlespacing{\section}{0pt}{0pt}{0pt}
+	\titlespacing{\subsection}{0pt}{0pt}{0pt}
+	
+	\newpage
+	\pagestyle{plain}
+	\pagenumbering{gobble}
+    \tableofcontents % vysází obsah
+	
+	%%% Začátek práce
+	\setcounter{figure}{0}
+	\setcounter{table}{0}
+	\newpage
+	
+	%%% Úvod
+	\pagenumbering{arabic}
+	\setcounter{page}{9}
+	\input{00uvod.tex}
+	
+	
+	%%% Elektronika
+	\input{01elektronika.tex}
+	
+	
+	
+	%%% Závěr
+	\input{99zaver.tex}
+
+	\pagenumbering{gobble}
+	\newpage
+	\printbibliography[title=Literatura]
+	\nocite{*}
+	\addcontentsline{toc}{chapter}{Literatura}
+	\renewcommand{\baselinestretch}{1.5} 
+	\lstlistoflistings
+	%%%\addcontentsline{toc}{chapter}{Seznam programů}{\linespread{1}\selectfont}
+	
+	
+	\listoffigures
+	\addcontentsline{toc}{chapter}{Seznam obrázků}{\linespread{1}\selectfont}
+	
+	
+
+	
+\end{document}

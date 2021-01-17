@@ -1,0 +1,104 @@
+\hypertarget{Elektronika}{\chapter{Elektronika}}
+
+\section{Požadavky}
+Požadavky se během vývoje měnily, tyto požadavky jsou nejaktuálnější. Byla podle nich navržena verze 3.0.1.
+
+Robot nesmí být velký,~ani jeho řídicí deska. Pro určení maximální velikosti jsme použili pravidla soutěže Robotický den\cite{pravidla-rd}, kde je nejmenším kritériem rozměr 10x10~cm pro kategorii Robo Sumo\cite{mini-sumo}, jelikož deska bude vždy zasazena do podvozku, ke kterému jsou připojeny senzory~a~aktivní prvky, deska tedy musí být menší. My jsme vybrali rozměry 50x60~mm (Š x V).
+
+Robota by měl být schopný sestavit i~naprostý začátečník, proto by měly být součástky co největší,~aby se jednoduše pájely. Použití THT\footnote{THT (Through-hole technology) součástky jsou součástky s~drátovými vývody, pro jejich montáž je potřeba vyvrtaná díra skrze desku.} součástek nepřipadá v~úvahu kvůli požadavkům na malé rozměry robota. Jako kompromis mezi velikostí a~snadnou montáží jsme stanovili SMD\footnote{SMD (Surface Mount Device) součástky mají na rozdíl od THT pouze plošky, které se pomocí pájky spojí s~měděnou vrstvou} pouzdra o~velikosti 1206\footnote{SMD pouzdra jsou číslovány podle své délky v~deseti tisícinách palce tzn. 1206 je 0,1206 palce dlouhá.}, která jdou, podle našich zkušeností a~pozorování, ještě poměrně jednoduše zapájet i~začátečníkům.
+
+Dále robot potřebuje nějaké prvky pro signalizaci stavů v~'terénu', tedy bez možnosti použití sériové linky. Pro tento účel jsme vybrali trojici LED. Barvy červená, oranžová a~zelená nebyly vybrány náhodně, tato kombinace barev umožňuje realizaci semaforu. Výstupní periférie robota byly rozšířeny o~piezo bzučák, takže robot může vydávat i~jednoduché tóny.
+
+Jako periferii pro uživatelský vstup jsme použili dva mikrospínače TC-0104-T\footnote{TC-0104-T je v~hobby robotice velice populární spínač (tlačítko) o~rozměrech 5x5~mm.}, které našim potřebám vyhovují jak po funkční stránce, tak nízkou cenou.
+
+Deska umožňuje přímé zapojení v~hobby robotice velice populárního ultrasonického senzoru HC-SR04\footnote{Díky své nízké ceně, malým rozměrům a~jednoduchému zapojení je HC-SR04 rozšířený na celém světě a~na měření vzdálenosti se nepoužívá téměř nic jiného.} a~dvou infračervených senzorů pro sledování čáry, které mohou fungovat v~digitálním i~analogovém režimu.
+
+Robot zvládne ovládat 4 DC motory nebo 2 krokové motory, k~jejich ovládání je použit čip DRV8833\cite{DRV8833}, který není na desku pájen přímo ve svém relativně malém pouzdře,~ale jako modul\footnote{Modul je další DPS zajišťující nějakou funkci.}. Tento modul navíc umožňuje jednoduchou výměnu v~případě zničení čipu. Na desku je také možné připojit 3 modelářská serva pomocí pinové lišty.
+
+Pro budoucí rozšíření desky jsou na stranách připraveny konektory pro přídavné moduly. Tyto konektory se skládají z~regulované hlavní 3v3 větve, přímého připojení k~akumulátoru, země a~I2C sběrnice.
+
+K~desce lze také připojit jakékoliv čidlo či~výstupní zařízení pomocí dvou standardizovaných I2C pinových lišt.
+
+\section{Software pro návrh DPS}
+Při~návrhu základní desky jsme vyzkoušeli celkem tři~různé programy. Dalo by se říct, že každá verze desky byla navržena v~programu jiného výrobce a~zaměřeného pro jinou cílovou skupinu.
+\subsection{KiCAD}
+První deska byla nakreslena v~KiCADu. KiCAD je opensource multiplatformní program, je tedy zdarma a~funguje na všech operačních systémech. Jako opensource projekt je cílen na poloprofesionální komunitu s~přesahem do komerční sféry, to nám vyhovovalo, neboť hlavní myšlenkou KiCADu je striktní rozdělení schématické značky a~pouzdra. V~praxi to funguje tak, že při~kreslení schématu se není potřeba zamýšlet nad tím, jaká konkrétní komponenta bude použita,~ale můžeme se plně soustředit na návrh. Nevýhodou v~té době bylo malé množství komponent, které byly dostupně stáhnutelné. Většinu exotičtějších součástek jsme si tedy museli kreslit sami (ESP32-DevKitC\cite{ESP32}, DRV8833).
+\begin{figure}[H]
+  	\centering
+ 	\includegraphics[width=300px]{img/drv8833.png}
+ 	\caption{Schématická značka DRV8833PW nakreslená v~KiCadu}
+\end{figure}
+Další slabou stránkou byla~absence možnosti spolupráce na jednom projektu. Bylo potřeba do procesu návrhu zapojit verzování pomocí Gitu\footnote{Git je distribuovaný verzovací systém používání na zálohování a~spolupráci více lidí souběžně} za~asistence Githubu\footnote{Github je webová služba podporující verzování pomocí Gitu. Umožňuje projekty hostovat veřejně dostupné.}. tento systém verzování a~spolupráce některým členům týmu nevyhovoval, a~tak jsme přešli na EasyEda.
+
+\subsection{EasyEDA}
+EasyEDA je cloudová služba\footnote{Cloudová služba běží ve webovém prohlížeči. Je tedy potřeba stálý přístup k~internetu,~ale nezabírá místo v~počítači~a~neklade vysoké nároky na výkon klientova počítače.} pro návrh DPS, spravovaná JLPCB\footnote{JLPCB je v~Čechách velice oblíbený čínský výrobce desek plošných spojů.}. Hlavní výhodou EasyEdy je sdílení návrhů součástek mezi uživateli a~propojení s~prodejci elektronických součástek. Nestalo se nám, že bychom museli nějakou součástku kreslit, většina součástek byla již někým nakreslená a~někdy i~se schématem zapojení zveřejněná. Jak u~cloudových služeb bývá zvykem, možnost kolaborace tu byla a~fungovala celkem dobře. Problémy vyvstal, když jsme potřebovali exportovat 3D model desky. Podpora nám sdělila, že se na této funkci pracuje,~ale že ji v~nejbližším roce nemáme čekat. To nás vedlo k~dalšímu přechodu, tentokrát~na profesionální EAGLE.
+
+\subsection{EAGLE}
+EAGLE je program používaný profesionály a~nebýt studentských licencí, tak o~něm~ani neuvažujeme. Začali jsme ho používat kvůli integraci s~Fusion360, 3D modelovacím softwarem. EAGLE trpí hlavně neduhy malých knihoven se součástkami a~nízkou uživatelskou přívětivostí.
+
+\subsection{Závěr}
+Po vyzkoušení všech těchto programů se vrátíme ke KiCADu, jelikož rozšířil knihovny a~přidal možnost exportu desky jako 3D modelu Problém se spoluprácí se jsme  vyřešili pomocí skriptů pro verzování a~práci s~GitHubem.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{img/niner_scheme4.PNG}
+    \caption{Schéma poslední verze desky v~Eaglu}
+\end{figure}
+\newpage
+
+\section{Vývojové iterace}
+Při~vývoji jsme narazili na několik nápadů, designu a~uliček, které nikam nevedly.
+
+\subsection{Verze 1.0}
+První verze byly dvě desky, ještě jsme nevěděli, co od ni vlastně od desky chceme. Vznikla tedy Niners a~RoboBoard. V~té době to byla prostě "menší" a~"větší deska". Na těchto deskách jsme si ujasnili, co je pro nás důležité, vyzkoušeli si návrh DPS a~způsob jejich objednání a~při~vývoji dalších verzí jsme tyto zkušenosti prohlubovali a~těžili z~nich.
+\subsubsection{RoboBoard}
+Větší deska je zaměřená spíše na ulehčení propojování modulů. Z~nynějších kritérií nesplňovala téměř nic. Uměla ovládat dva stejnosměrné a~dva krokové motory a~sedm servo motorů, jako výstupní zařízení používala trojici barevných LED opět v~semafor kombinaci. Možná interakce s~uživatelem byla obohacena o~konektor pro 0,96 palcový LCD displej a~8x8 maticový displej. Ke komunikaci směrem uživatel - deska byla k~dispozici dvě tlačítka a~dva potenciometry. K~desce šel také připojit kompas a~ultra-sonický senzor.
+\begin{figure}[H]
+  	\centering
+ 	\includegraphics[width=300px]{img/hw/erko.png}
+ 	\caption{Erko v1}
+\end{figure}
+\subsubsection{Niners 1.0}
+První verze  Niners byla delší než~aktuální,~ale obecně jsme se k~dosti věcem z~první verze vraceli. Uměla ovládat 4 DC motory, LED kombinaci semafor, bzučák, jedno tlačítko a~uměla komunikovat v~IR spektru. Pro I2C senzory měla dvě pevné patice a~to pro  HMC5883L\footnote{HMC5883L je levný digitální kompas, komunikující po TWI sběrnici (obdoba I2C nepodléhající licenčním poplatkům).}~a~akcelerometr/gyroskop MPU6050. Deska uměla dokonce i~měřit teplotu a~vzdušnou vlhkost.
+
+\begin{figure}[H]
+  	\centering
+ 	\includegraphics[width=300px]{img/hw/niners01.png}
+ 	\caption{Niners v1}
+\end{figure}
+
+Desky byly navržené v~KiCadu, kterému v~té době chybělo pouzdro pro ESP32-DevKitC\cite{ESP32}. Museli jsme si ho navrhnout sami, přičemž jsme se dopustili chyby a~nákres jsme měli zrcadlově obrácený. To jsme zjistili~až po osazení. Desky bychom museli objednávat znovu a~při~té příležitosti jsme se rozhodli udělat nějaké změny.
+
+\subsubsection{Naše další kroky}
+Po otestování a~srovnání desky jsme se dohodli na tom, že koncept velké a~multifunkční desky není vyhovující a~vývoj nasměrovali směrem k~malé modulární desce.
+
+\subsection{Verze 2.0}
+Niners V2.0 byla odlišná od všech ostatních desek, při~návrhu jsme počítali s~tím, že se základní deska bude doplňovat shieldy\footnote{Jako shield je v~elektronice označována odnímatelná deska, které poskytuje doplňující funkce při~využití IO pinů základní desky.}. Velké množství IO pinů jsme tedy chtěli uvolnit pro shield. Deska tedy přišla o~schopnost ovládat 2 DC motory, IR přijímač/vysílač, kompas a~konektory pro použití volných pinů\footnote{Konektory už nebyly vráceny a~považujeme to za největší slabinu desky.}. Jediné, co přibylo, byl konektor pro ultra sonický senzor. Po vizuální stránce jsme udělali velký krok kupředu, deska má lepší rozložení a~bílou barvu, která společně s~jiným způsobem tvorby měděných cest\footnote{Ve verzi 1.0 veškerá měď na desce byla pouze pro propojení, v~této verzi se odleptala měď jen okolo cest, povrch tedy vypadá hladší.} pomáhá estetice.
+\begin{figure}[H]
+  	\centering
+ 	\includegraphics[width=300px]{img/hw/niners02.png}
+ 	\caption{Niners v2}
+\end{figure}
+\newpage
+\subsection{Verze 3.0}
+Na třetí desce přibyl opět druhý h-bridge, robot tedy opět zvládá 4 DC motory. Pro regulaci napětí jsme vyměnili LM-7805 za úspornější LF33\cite{LF33-RoboDoupe}, který má menší voltage-drop (0.45V)\cite{LF33}. Přibyly LED signalizující fault state\footnote{Fault state u~hbridgů DRV8833\cite{DRV8833} nastane při~přepětí, zkratu nebo při~nízkém napětí na výstupech. } h-hbridgů. Všechny LED jsou v~SMD pouzdru 1206. Piezo bzučák byl vyměněn za SMD variantu. Stejně tak ochrana obrácené polarity je v~SMD verzi. Přibyl také obvod pro nabíjení jednoho~akumulátorového článku a~obdélníkový výřez v~desce pro protažení kabelů z~podvozku nahoru.
+\begin{figure}[H]
+  	\centering
+ 	\includegraphics[width=300px]{img/hw/niners03.png}
+ 	\caption{Niners v3}
+\end{figure}
+\newpage
+\subsection{Verze 4.0}
+Ve verzi 4.0 byly odstraněny shieldy. Místo nich jsme se rozhodli používat moduly. Modul bude připojen k~hlavní desce pomocí dvou konektorů po stranách a~komunikovat budou po TWI. Dále zmizela nabíječka. K~nabíjení~akumulátoru bude nyní potřeba modul, který se připojí pod ESP32 na 4 piny. Kromě LED signalizující zapnutého robota a~další konektor pro senzor sledování čáry nové funkcionality nepřibyly. Odstraněna byla i~ochrana opačné polarity. Ta byla nahrazena konektory se zámkem, které nedovolí špatné zapojení baterie. Stejné konektory byly přidány i~pro motory, které jsou nyní zapojeny pomocí klasického pinového hřebínku s~roztečí 0.254 a~konektoru se zámkem na spodní straně desky.
+
+Vzhledem k~aktuální situaci v~Číně (leden-únor 2020)\footnote{Desky jsme zadali do výroby před začátkem Čínského nového roku, který výrobu zdržel o~čtrnáct dní, poté kvůli viru SARS-CoV-2 byla továrna ještě nějaký čas zavřená.} desky ještě nemáme,~ale doufáme, že budou funkční a~stanou se finální verzí.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\textwidth]{img/hw/niners04.png}
+    \caption{Niners v4.0 strana součástek}
+  \end{figure}
+ 
+
+\section{Neduhy desky}
+Jako snad každý produkt i~naše deska má nějaké nedodržení požadavků, špatně pájitelných komponent, zkrátka chyb. Za hlavní a~největší problém považujeme použití tranzistoru v~pouzdře SOT23\footnote{Pouzdro SOT23 je velikostí podobné součástkám 0805,~ale má tři~vývody.}, který se obtížně pájí. Absence nabíječky~akumulátoru na desce nás také trápí,~ale ta byla vyřešena použitím modulu, který zvládne nabíjet~až dva~akumulátory nezávisle na jejich zapojení (paralelně či~sériově).
