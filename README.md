@@ -100,7 +100,7 @@ Nejzajímavější je první slovo, *Malina1*, to je interní název knihy. Bude
  - \textit{*kurzíva*}
  
  ## Podpora
- Už znáš asi všechno důležité. Projekt je pod MIT licencí, takže "as is" a veškerá podpora se bude řídit mojí náladou. Budu se snažit pomoci se vším, ale nezvládnu to 24/7. S použitím šablony musíš počítat, že když v ní něco rozbiješ, bude to chvíli rozbité.
+ Už znáš asi všechno důležité. Projekt je pod MIT licencí, takže "as is" a veškerá podpora se bude řídit mojí náladou. Budu se snažit pomoci se vším, ale nezvládnu to 24/7. S použitím šablony musíš počítat, že když v ní něco rozbiješ, bude to chvíli rozbité. Jestli tě zajímá něco víc, koukni se nejdřív na [dokumentaci](https://www.overleaf.com/learn/latex/Main_Page)
  
  Jak kontaktovat podporu:
  - ideálně vytvořit **issue** tady na githubu
