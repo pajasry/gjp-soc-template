@@ -117,4 +117,4 @@ Nejzajímavější je první slovo, *Malina1*, to je interní název knihy. Bude
  - ideálně vytvořit **issue** tady na githubu
  - napsat email na pavel@niners.cz
  - napsat mi na [FB](https://www.facebook.com/pavel.srytr)
- - (napsat [Kubíkovi](https://chamik.eu/contact.cs/))
+ - napsat [Kubíkovi](https://chamik.eu/contact.cs/)
